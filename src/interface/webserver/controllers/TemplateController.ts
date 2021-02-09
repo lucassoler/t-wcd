@@ -6,6 +6,7 @@ import { TemplateListPresenter } from "../../presenters/TemplateListPresenter";
 import TemplateGet from "../../../application/usecases/TemplateGet";
 import { TemplatePresenter } from "../../presenters/TemplatePresenter";
 import TemplateCreating from "../../../application/usecases/TemplateCreating";
+import TemplateListDTO from "../../presenters/TemplateListDTO";
 
 export default class TemplateController {
     dependencies:Dependencies;
@@ -19,7 +20,7 @@ export default class TemplateController {
         const templateListing:TemplateListing = new TemplateListing(this.dependencies.templateRepository);
         const result = await templateListing.Execute();
 
-        const templatesPresented:TemplateDTO[] = [];
+        const templatesPresented:TemplateListDTO[] = [];
         
         for (let i = 0; i < result.succeed.length; i++) {
             templatesPresented.push(TemplateListPresenter.present(result.succeed[i]));
@@ -46,7 +47,7 @@ export default class TemplateController {
     async create(req:Request, res:Response) {
         const templateCreating:TemplateCreating = new TemplateCreating(this.dependencies.templateRepository);
         const result = await templateCreating.Execute(req.body.name);
-        
+
         if (result.error) {
             return res.status(400).json({ error: result.error.message });
         }

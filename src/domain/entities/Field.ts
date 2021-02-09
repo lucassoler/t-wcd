@@ -14,6 +14,10 @@ export default class Field {
         return this._name;
     }
 
+    public get type():string {
+        return this._type;
+    }
+
     public get parentId():string | null{
         return this._parentId;
     }

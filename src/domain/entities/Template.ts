@@ -23,6 +23,9 @@ export default class Template {
     public get sections():Section[] {
         return this._sections;
     }
+    public get fields():Field[] {
+        return this._fields;
+    }
 
     addNewSection(id:string, name:string, parentId:string | null) {
         const section:Section = new SectionBuilder().withId(id).withName(name).withParentSectionId(parentId).build();

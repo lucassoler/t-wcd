@@ -17,6 +17,7 @@ export default class FieldCreating extends Usecase {
             const template:Template = await this.fetchTemplate(templateId);
             this.fetchSection(parentId, template);
             const field:Field = template.addNewField(this.templateRepository.nextFieldId(), name, type, parentId);
+            await this.templateRepository.save(template);
             return this.succeed(field);
         } catch (error) {
             return this.failure(error);

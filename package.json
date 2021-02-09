@@ -22,7 +22,8 @@
   "scripts": {
     "start": "nodemon ./src/interface/webserver/server.ts",
     "test": "NODE_ENV=test jest --testPathPattern=__test__/unit",
-    "test-watch": "NODE_ENV=test jest --watchAll  --testPathPattern=__test__/unit"
+    "test-watch": "NODE_ENV=test jest --watchAll  --testPathPattern=__test__/unit",
+    "coverage": "NODE_ENV=test jest --coverage --no-cache --maxWorkers=1"
   },
   "jest": {
     "verbose": true,
