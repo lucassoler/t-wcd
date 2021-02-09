@@ -38,8 +38,8 @@ export default class Template {
         return section;
     }
 
-    addNewField(id:string, name:string, type:string, parentId:string | null) {
-        const field:Field = new Field(id, name, type, parentId);
+    addNewField(id:string, name:string, type:string, required:boolean, parentId:string | null) {
+        const field:Field = new Field(id, name, type, required, parentId);
         this._fields.push(field);
         return field;
     }

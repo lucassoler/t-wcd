@@ -17,31 +17,31 @@ describe('Create a new Field', () => {
     describe('Return an error', () => {
         test('if name is empty', async () => {
             const fieldCreating:FieldCreating = createHandler();
-            const result = await fieldCreating.Execute('123', '', '');
+            const result = await fieldCreating.Execute('123', '', '', false);
             verifyError(result.error, 'name is required');
         });
 
         test('if type is empty', async () => {
             const fieldCreating:FieldCreating = createHandler();
-            const result = await fieldCreating.Execute('123', 'Field', '');
+            const result = await fieldCreating.Execute('123', 'Field', '', false);
             verifyError(result.error, 'type is required');
         });
 
         test('if type not valid', async () => {
             const fieldCreating:FieldCreating = createHandler();
-            const result = await fieldCreating.Execute('123', 'Field', 'invalid');
+            const result = await fieldCreating.Execute('123', 'Field', 'invalid', false);
             verifyError(result.error, 'invalid type');
         });
 
         test('if template is not founded', async () => {
             const fieldCreating:FieldCreating = createHandler();
-            const result = await fieldCreating.Execute('123', 'Field', 'string');
+            const result = await fieldCreating.Execute('123', 'Field', 'string', false);
             verifyError(result.error, 'template not founded');
         });
 
         test('if parent is defined but not existing', async () => {
             const fieldCreating:FieldCreating = createHandler([EXEMPLE_TEMPLATE]);
-            const result = await fieldCreating.Execute('1', 'Field', 'string', '2');
+            const result = await fieldCreating.Execute('1', 'Field', 'string', false, '2');
             verifyError(result.error, 'section not founded');
         });
     });
@@ -49,14 +49,23 @@ describe('Create a new Field', () => {
     describe('Create new field', () => {
         test('with parent id null', async () => {
             const fieldCreating:FieldCreating = createHandler([EXEMPLE_TEMPLATE]);
-            const result = await fieldCreating.Execute('1', 'Field', 'string');
+            const result = await fieldCreating.Execute('1', 'Field', 'string', false);
             verifyField(result.succeed);
+        });
+
+        test('with required true', async () => {
+            const fieldCreating:FieldCreating = createHandler([EXEMPLE_TEMPLATE]);
+            const result = await fieldCreating.Execute('1', 'Field', 'string', true);
+            verifyField(result.succeed, true);
         });
     });
 });
 
-function verifyField(field:Field) {
+function verifyField(field:Field, required:boolean = false) {
     expect(field).not.toBeNull();
+    expect(field.name).toBe('Field');
+    expect(field.type).toBe('string');
+    expect(field.required).toBe(required);
 }
 
 function createHandler(templatePopulation:Template[] = []): FieldCreating {

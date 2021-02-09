@@ -11,12 +11,12 @@ export default class FieldCreating extends Usecase {
         super();
     }
 
-    async Execute(templateId:string, name:string, type:string, parentId:string | null = null){
+    async Execute(templateId:string, name:string, type:string, required:boolean, parentId:string | null = null){
         try {
             this.verifyForm(name, type);
             const template:Template = await this.fetchTemplate(templateId);
             this.fetchSection(parentId, template);
-            const field:Field = template.addNewField(this.templateRepository.nextFieldId(), name, type, parentId);
+            const field:Field = template.addNewField(this.templateRepository.nextFieldId(), name, type, required, parentId);
             await this.templateRepository.save(template);
             return this.succeed(field);
         } catch (error) {
