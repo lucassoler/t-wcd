@@ -1,22 +1,20 @@
 import Usecase from "../../common/Usecase";
 import Template from "../../domain/entities/Template";
 import TemplateRepository from "../../domain/repositories/TemplateRepository";
-import TemplateBuilder from "../builders/templateBuilder";
 
-export default class TemplateCreating extends Usecase {
+export default class SectionCreating extends Usecase {
     constructor(private templateRepository:TemplateRepository) {
         super();
     }
 
-    async Execute(name:string){
+    async Execute(templateId:string, name:string, parentId:string | null = null){
         try {
             if (name === '') {
                 throw new Error('name is required');
             }
 
-            const template:Template = new TemplateBuilder().withId(this.templateRepository.nextId()).withName(name).build();
-
-            await this.templateRepository.add(template);
+            const template:Template = await this.templateRepository.get(templateId);
+            template.addNewSection(this.templateRepository.nextSectionId(), name, parentId);
             
             return this.succeed(template);
         } catch (error) {

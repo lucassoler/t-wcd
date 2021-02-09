@@ -1,4 +1,5 @@
 import TemplateCreating from "../../src/application/usecases/TemplateCreating";
+import Template from "../../src/domain/entities/Template";
 import TemplateRepositoryInMemory from "../../src/infrastructure/repositories/TemplateRepositoryInMemory";
 
 let templateRepository:TemplateRepositoryInMemory;
@@ -26,7 +27,7 @@ function createHandler(): TemplateCreating {
     return new TemplateCreating(templateRepository);
 }
 
-function verifyTemplate(template: any) {
+function verifyTemplate(template: Template) {
     expect(template).not.toBeUndefined();
     expect(template.name).toBe('Template');
 }

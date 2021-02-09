@@ -1,3 +1,4 @@
+import TemplateBuilder from "../../src/application/builders/templateBuilder";
 import TemplateCreating from "../../src/application/usecases/TemplateCreating";
 import TemplateUpdating from "../../src/application/usecases/TemplateUpdating";
 import Template from "../../src/domain/entities/Template";
@@ -22,7 +23,7 @@ describe('Template Updating', () => {
 
     describe('Update the template', () => {
         test('with valid name and valid ID', async () => {
-            const templateUpdating:TemplateUpdating = createHandler([new Template('1', 'Template to update')]);
+            const templateUpdating:TemplateUpdating = createHandler([new TemplateBuilder().withId('1').withName('Template to update').build()]);
             const result = await templateUpdating.Execute('1', 'Template Updated');
             verifyTemplate(result.succeed, 'Template Updated')
         });

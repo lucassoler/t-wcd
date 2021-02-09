@@ -11,6 +11,14 @@ export default class TemplateRepositoryInMemory implements TemplateRepository {
         return uuidv4();
     }
 
+    nextSectionId():string {
+        return uuidv4();
+    }
+
+    nextFieldId():string {
+        return uuidv4();
+    }
+
     async add(template:Template):Promise<Template> {
         this.templates.push(template);
 
@@ -23,6 +31,10 @@ export default class TemplateRepositoryInMemory implements TemplateRepository {
         if (!template) throw new Error("template not founded");
         
         return Promise.resolve(template);
+    }
+
+    async all():Promise<Template[]> {
+        return Promise.resolve(this.templates);
     }
 
     async save(template:Template):Promise<Template> {
