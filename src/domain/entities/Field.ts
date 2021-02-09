@@ -1,10 +1,12 @@
-export default class Field {
+import FormElement from "./FormElement";
+
+export default class Field extends FormElement {
     constructor(private _id:string,
                 private _name:string,
                 private _type:string,
                 private _required:boolean,
                 private _parentId:string | null) {
-
+        super();
     }
 
     public get id():string {

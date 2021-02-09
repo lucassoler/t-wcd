@@ -1,8 +1,10 @@
-export default class Section {
+import FormElement from "./FormElement";
+
+export default class Section extends FormElement {
     constructor(private _id:string,
                 private _name:string,
                 private _parentId:string | null) {
-
+        super();
     }
 
     public get id():string {
