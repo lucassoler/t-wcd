@@ -4,7 +4,7 @@ import Section from "../../domain/entities/Section";
 import Template from "../../domain/entities/Template";
 import TemplateRepository from "../../domain/repositories/TemplateRepository";
 
-const FIELD_TYPES:string[] = ['string', 'number', 'list'];
+const FIELD_TYPES:string[] = ['string', 'number', 'boolean', 'list'];
 
 export default class FieldCreating extends Usecase {
     constructor(private templateRepository:TemplateRepository) {
@@ -18,7 +18,7 @@ export default class FieldCreating extends Usecase {
             this.fetchSection(parentId, template);
             const field:Field = template.addNewField(this.templateRepository.nextFieldId(), name, type, required, parentId);
             await this.templateRepository.save(template);
-            return this.succeed(field);
+            return this.succeed(template);
         } catch (error) {
             return this.failure(error);
         }

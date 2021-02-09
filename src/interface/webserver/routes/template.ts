@@ -16,6 +16,9 @@ export default ((dependencies:Dependencies) => {
     templateRouter.route('/:templateId')
         .get((req:Request, res:Response) => {
             new TemplateController(dependencies).get(req, res);
+        })
+        .put((req:Request, res:Response) => {
+            new TemplateController(dependencies).update(req, res);
         });
 
     return templateRouter;

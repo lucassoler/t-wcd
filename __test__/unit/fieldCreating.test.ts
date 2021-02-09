@@ -50,22 +50,32 @@ describe('Create a new Field', () => {
         test('with parent id null', async () => {
             const fieldCreating:FieldCreating = createHandler([EXEMPLE_TEMPLATE]);
             const result = await fieldCreating.Execute('1', 'Field', 'string', false);
-            verifyField(result.succeed);
+            verifyField(result.succeed, 1, 'Field', 'string', false);
         });
 
         test('with required true', async () => {
             const fieldCreating:FieldCreating = createHandler([EXEMPLE_TEMPLATE]);
             const result = await fieldCreating.Execute('1', 'Field', 'string', true);
-            verifyField(result.succeed, true);
+            verifyField(result.succeed, 2, 'Field', 'string', true);
         });
     });
 });
 
-function verifyField(field:Field, required:boolean = false) {
-    expect(field).not.toBeNull();
-    expect(field.name).toBe('Field');
-    expect(field.type).toBe('string');
-    expect(field.required).toBe(required);
+function verifyField(template: Template, fieldsLength:number = 2, fieldName:string = 'Field ', fieldType:string = 'string', required:boolean, parentId:string | null = null) {
+    expect(template).not.toBeUndefined();
+    expect(template.fields.length).toBe(fieldsLength);
+    const lastFieldAdded = template.fields[template.fields.length - 1];
+
+    expect(lastFieldAdded.name).toBe(fieldName);
+    expect(lastFieldAdded.type).toBe(fieldType);
+    expect(lastFieldAdded.required).toBe(required);
+
+    if (parentId === null) {
+        expect(lastFieldAdded.hasParent()).toBeFalsy();
+    } else {
+        expect(lastFieldAdded.hasParent()).toBeTruthy();
+        expect(lastFieldAdded.parentId).toBe(parentId);
+    }
 }
 
 function createHandler(templatePopulation:Template[] = []): FieldCreating {

@@ -26,4 +26,9 @@ export default class Field {
     public get parentId():string | null{
         return this._parentId;
     }
+
+    hasParent():boolean {
+        if (this._parentId) return true;
+        return false;
+    }
 };

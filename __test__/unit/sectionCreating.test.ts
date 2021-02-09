@@ -12,6 +12,7 @@ const EXEMPLE_TEMPLATE = new TemplateBuilder()
                                 .withSections(
                                     [new SectionBuilder().withId('1').withName('Old section').build()])
                                 .build();
+                                
 describe('Create a new section', () => {
     describe('Return an error', () => {
         test('if section name is invalid', async () => {

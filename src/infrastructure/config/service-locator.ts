@@ -1,9 +1,9 @@
 import TemplateRepository from "../../domain/repositories/TemplateRepository";
-import TemplateRepositoryInMemory from "../repositories/TemplateRepositoryInMemory";
 import { Dependencies } from "./dependencies";
+import { TemplateDI } from "./DI/TemplateDI";
 
 export default (() => {
-    const templateRepository:TemplateRepository = new TemplateRepositoryInMemory([]);
+    const templateRepository:TemplateRepository = TemplateDI.templateRepository;
 
     const beans:Dependencies = {
         templateRepository: templateRepository
